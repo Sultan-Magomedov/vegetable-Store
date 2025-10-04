@@ -1,6 +1,7 @@
-import { describe, expect, it, vi } from "vitest";
-import { screen, render, userEvent } from "../../../test-utils";
+import { describe, expect, it } from "vitest";
+import { screen, render} from "../../../test-utils";
 import CartCard from "./CartCard";
+import "@testing-library/jest-dom"
 
 describe("CartCard component", () => {
   it("the product image should be displayed", () => {

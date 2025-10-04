@@ -1,6 +1,7 @@
 import {describe, expect, it,vi} from "vitest"
 import {screen,render, userEvent} from "../../../test-utils"
 import Header from "./Header"
+import "@testing-library/jest-dom"
 
 
 describe("Header component", ()=>{

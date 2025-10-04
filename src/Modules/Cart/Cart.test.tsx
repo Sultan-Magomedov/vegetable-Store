@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { screen, render, userEvent } from "../../../test-utils";
+import { screen, render } from "../../../test-utils";
 import { CartContext } from "../../CartContext";
 import Cart from "./Cart";
+import "@testing-library/jest-dom"
 
 describe("Cart component", () => {
   const mockAddToCart = vi.fn();

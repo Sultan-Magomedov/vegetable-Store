@@ -2,6 +2,7 @@ import { describe, expect, it,vi } from "vitest";
 import { screen, render, userEvent } from "../../../test-utils";
 import MyCard from "./Card";
 import { CartContext } from "../../CartContext";
+import "@testing-library/jest-dom"
 
 describe("Card component", () => {
   it("the product image should be displayed", () => {
