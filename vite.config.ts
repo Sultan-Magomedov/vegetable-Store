@@ -4,12 +4,16 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  plugins: [react(),svgr({
-           include: "**/*.svg?react"
-         })],
+  plugins: [
+    react(),
+    svgr({
+      include: "**/*.svg?react",
+    }),
+  ],
+  base: "/vegetable-Store/",
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: './vitest.setup.mjs',
+    setupFiles: "./vitest.setup.mjs",
   },
 });
