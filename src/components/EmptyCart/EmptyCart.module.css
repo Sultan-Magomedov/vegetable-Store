@@ -1,0 +1,15 @@
+.cartWindow{
+  position: fixed;
+  z-index: 9999;
+  right: 25px;
+  top: 60px;
+  padding: 15px 60px;
+  background-color:white;
+  border-radius: 15px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.text{
+  font-weight: normal;
+  color: gray;
+}
