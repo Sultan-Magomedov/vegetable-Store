@@ -19,8 +19,8 @@ function ProductsList() {
         "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json"
       ).json();
       setProducts(data);
-      console.log(data);
-    } catch (err) {
+    } catch (err:unknown) {
+      if(err instanceof Error)
       console.log(err.message);
     }
   };
