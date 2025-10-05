@@ -10,7 +10,6 @@ export default defineConfig({
       include: "**/*.svg?react",
     }),
   ],
-  base: "/vegetable-Store/",
   test: {
     globals: true,
     environment: "jsdom",
