@@ -10,7 +10,7 @@ export default defineConfig({
       include: "**/*.svg?react",
     }),
   ],
-  base: "./",
+  base: "/",
   test: {
     globals: true,
     environment: "jsdom",
