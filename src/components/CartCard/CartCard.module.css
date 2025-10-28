@@ -1,6 +1,6 @@
 .flex {
   display: flex;
-  width: 350px;
+  width: 396px;
   justify-content: start;
   align-items: center; 
 }
@@ -16,4 +16,6 @@
     flex-direction: column;
     flex: 1; 
     gap: 10px;
+    padding-bottom: 18px;
+    border-bottom:1px solid rgb(216, 211, 211);
 }

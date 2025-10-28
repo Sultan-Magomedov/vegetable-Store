@@ -1,33 +1,19 @@
-import { useContext } from "react";
 import Stepper from "../Stepper/Stepper";
 import style from "./CartCard.module.css";
-import { CartContext } from "../../CartContext";
+import { useTypedDispatch } from "../../hooks/redux";
+import { updateQuantity } from "../../store/reducers/CartSlice";
+import type { CartType } from "../../types";
 
-interface CartCardProps {
-  id:number
-  image: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
-function CartCard({
-  id,
-  image,
-  name,
-  price,
-  quantity,
-}: CartCardProps) {
-
-const {updateQuantity}=useContext(CartContext)
+function CartCard({ id, image, name, price, quantity }: CartType) {
+  const dispatch = useTypedDispatch();
 
   const handleQuantityChange = (newQuantity: number) => {
-    updateQuantity(id,newQuantity);
+    dispatch(updateQuantity({ id: id, quantity: newQuantity }));
   };
 
   return (
     <div className={style.flex}>
-      <img src={image} height={80} alt={name}/>
+      <img src={image} height={80} alt={name} />
       <div className={style.flex3}>
         <p style={{ display: "flex" }}>{name}</p>
         <div className={style.flex2}>

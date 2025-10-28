@@ -2,8 +2,8 @@
   position: fixed;
   z-index: 9999;
   right: 25px;
-  top: 60px;
-  padding: 5px 15px;
+  top: 70px;
+  padding: 24px;
   background-color:white;
   border-radius: 15px;
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2);
@@ -16,15 +16,13 @@
 
 .cartItem{
   list-style: none;
-  border-bottom:1px solid rgb(216, 211, 211);
-}
-.cartItem:last-child{
-  border-bottom: none;
+  margin-bottom: 12px;
+  
 }
 .total{
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
+  padding-top: 12px;
   border-top:1px solid rgb(216, 211, 211);
 }
 

@@ -1,30 +1,19 @@
 import style from "./Cart.module.css";
 import CartCard from "../../components/CartCard/CartCard";
-import { useContext } from "react";
-import { CartContext } from "../../CartContext";
 import EmptyCart from "../../components/EmptyCart/EmptyCart";
-
-interface CartType {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
-
+import { useTypedSelector } from "../../hooks/redux";
+import type { CartType } from "../../types";
 interface CartProps {
   isOpen: boolean;
 }
 
 function Cart({ isOpen }: CartProps) {
-  const { cart } = useContext(CartContext) as { cart: CartType[] };
+  const cart = useTypedSelector((state) => state.cartReducer.cart);
 
   if (!isOpen) return null;
 
-  if(cart.length===0){
-    return(
-      <EmptyCart/>
-    )
+  if (cart.length === 0) {
+    return <EmptyCart />;
   }
 
   const total = cart.reduce(

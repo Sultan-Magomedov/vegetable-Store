@@ -2,13 +2,7 @@ import { SimpleGrid } from "@mantine/core";
 import { useState, useEffect } from "react";
 import ky from "ky";
 import MyCard from "../../components/Card/Card";
-
-interface ProductType {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-}
+import type { ProductType } from "../../types";
 
 function ProductsList() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -19,9 +13,8 @@ function ProductsList() {
         "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json"
       ).json();
       setProducts(data);
-    } catch (err:unknown) {
-      if(err instanceof Error)
-      console.log(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) console.log(err.message);
     }
   };
 
@@ -31,7 +24,7 @@ function ProductsList() {
 
   return (
     <>
-      <h1 style={{ display: "flex",marginTop:"60px" }}>Catalog</h1>
+      <h1 style={{ display: "flex", marginTop: "60px" }}>Catalog</h1>
       <SimpleGrid cols={4}>
         {products.map((product) => (
           <MyCard

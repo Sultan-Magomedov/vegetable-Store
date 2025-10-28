@@ -1,33 +1,30 @@
 import { Group, Card, Text, Image, Button, Flex } from "@mantine/core";
 import "@mantine/core/styles.css";
 import CartIcon from "../../assets/icons/Icon.svg?react";
-import { useContext, useState} from "react";
-import { CartContext } from "../../CartContext";
+import { useState } from "react";
 import CardStepper from "../CardStepper/CardStepper";
+import { useTypedDispatch } from "../../hooks/redux";
+import { addToCart } from "../../store/reducers/CartSlice";
+import type { ProductType } from "../../types";
 
-interface MyCardProps {
-  id:number
-  image: string;
-  name: string;
-  price: number;
-}
+function MyCard({ id, image, name, price }: ProductType) {
+  const dispatch = useTypedDispatch();
+  const [quantity, setQuantity] = useState<number>(1);
 
-function MyCard({ id,image, name, price}: MyCardProps) {
-  const {addToCart}=useContext(CartContext)
-const [quantity, setQuantity] = useState<number>(1);
-
-const handleQuantityChange=(newQuantity:number)=>{
-setQuantity(newQuantity)
-}
+  const handleQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+  };
   const handleAddToCart = () => {
-    addToCart({
-      id: id,
-      name: name,
-      price: price,
-      quantity: quantity,
-      image:image
-    });
-    setQuantity(1)
+    dispatch(
+      addToCart({
+        id: id,
+        name: name,
+        price: price,
+        quantity: quantity,
+        image: image,
+      })
+    );
+    setQuantity(1);
   };
 
   return (
@@ -36,7 +33,7 @@ setQuantity(newQuantity)
         <Image src={image} alt={name} height={260} />
       </Card.Section>
       <Group justify="space-between">
-        <Text >{name}</Text>
+        <Text>{name}</Text>
         <CardStepper value={quantity} onChange={handleQuantityChange} />
       </Group>
       <Group justify="space-between">

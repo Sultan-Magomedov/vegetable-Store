@@ -1,6 +1,10 @@
-export type ProductType= {
+export interface ProductType {
   id: number;
   name: string;
   price: number;
   image: string;
+}
+
+export interface CartType extends ProductType {
+  quantity: number;
 }
