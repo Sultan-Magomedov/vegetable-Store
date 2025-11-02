@@ -1,29 +1,30 @@
-import { describe, expect, it,vi } from "vitest";
-import { screen, render, userEvent } from "../../../test-utils";
+import { describe, expect, it, vi } from "vitest";
+import { screen, renderWithRedux, userEvent } from "../../../test-utils";
 import MyCard from "./Card";
-import { CartContext } from "../../CartContext";
-import "@testing-library/jest-dom"
+import "@testing-library/jest-dom";
+import { addToCart } from "../../store/reducers/CartSlice";
+import { setupStore } from "../../store/store";
 
 describe("Card component", () => {
   it("the product image should be displayed", () => {
-    render(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
+    renderWithRedux(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
     const image = screen.getByRole("img");
     expect(image).toBeInTheDocument();
     expect(image.getAttribute("src")).toBe("#");
     expect(image.getAttribute("alt")).toBe("apple");
   });
   it("the price and the product name should be displayed", () => {
-    render(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
+    renderWithRedux(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
     expect(screen.getByText(/apple/i)).toBeInTheDocument();
     expect(screen.getByText(/100/i)).toBeInTheDocument();
   });
   it("the add to cart button should be displayed", () => {
-    render(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
+    renderWithRedux(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
     const button = screen.getByText(/add to cart/i);
     expect(button).toBeInTheDocument();
   });
   it("the buttons + and - should be displayed", () => {
-    render(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
+    renderWithRedux(<MyCard id={1} image={"#"} name={"apple"} price={100} />);
     const incrementButton = screen.getByText("+");
     const decrementButton = screen.getByText("-");
     expect(incrementButton).toBeInTheDocument();
@@ -31,23 +32,16 @@ describe("Card component", () => {
   });
 
   it("it should call handleAddToCart when the Add to cart button is clicked", async () => {
-    const mockAddToCart=vi.fn()
-    const mockUpdateQuantity=vi.fn()
-    const mockRemoveFromCart=vi.fn()
-    render(
-      <CartContext.Provider value={{ cart:[], addToCart:mockAddToCart, updateQuantity:mockUpdateQuantity, removeFromCart:mockRemoveFromCart }}>
-        <MyCard id={1} image={"#"} name={"apple"} price={100} />
-      </CartContext.Provider>
-    );
+    const store = setupStore({ cartReducer: { cart: [] } });
+    const mockDispatch = vi.spyOn(store, "dispatch");
+    renderWithRedux(<MyCard id={1} image={"#"} name={"apple"} price={100} />, {
+      store,
+    });
     const button = screen.getByText(/add to cart/i);
     await userEvent.click(button);
-    expect(mockAddToCart).toHaveBeenCalledTimes(1)
-    expect(mockAddToCart).toHaveBeenCalledWith({
-         id: 1,
-      name: "apple",
-      price: 100,
-      quantity: 1,
-      image:"#"
-    })
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(
+      addToCart({ id: 1, name: "apple", price: 100, quantity: 1, image: "#" })
+    );
   });
 });

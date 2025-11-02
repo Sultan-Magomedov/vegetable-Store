@@ -4,7 +4,7 @@ import type { CartType } from "../../types";
 interface CartState {
   cart: CartType[];
 }
-const initialState: CartState = {
+export const initialState: CartState = {
   cart: [],
 };
 

@@ -1,13 +1,38 @@
 // ./test-utils/render.tsx
-import { render as testingLibraryRender } from '@testing-library/react';
-import { MantineProvider } from '@mantine/core';
+import {
+  render as testingLibraryRender,
+  type RenderOptions,
+} from "@testing-library/react";
+import { MantineProvider } from "@mantine/core";
 // Import your theme object
 // import { theme } from '../src/theme';
+import { Provider } from "react-redux";
+import { setupStore, type RootState, type AppStore } from "../src/store/store";
 
-export function render(ui: React.ReactNode) {
-  return testingLibraryRender(<>{ui}</>, {
-    wrapper: ({ children }: { children: React.ReactNode }) => (
-      <MantineProvider env="test">{children}</MantineProvider>
-    ),
-  });
+interface ExtendedRenderOptions extends Omit<RenderOptions, "wrapper"> {
+  preloadedState?: Partial<RootState>;
+  store?: AppStore;
 }
+
+export function renderWithRedux(
+  ui: React.ReactElement,
+  {
+    preloadedState={},
+    store = setupStore(preloadedState),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) {
+  function Wrapper({ children }: { children: React.ReactNode }) {
+    return (
+      <MantineProvider env="test">
+        <Provider store={store}>{children}</Provider>
+      </MantineProvider>
+    );
+  }
+
+  return {
+    store,
+    ...testingLibraryRender(ui, { wrapper: Wrapper, ...renderOptions }),
+  };
+}
+export { testingLibraryRender };

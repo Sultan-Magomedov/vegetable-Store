@@ -1,30 +1,24 @@
 import { SimpleGrid } from "@mantine/core";
-import { useState, useEffect } from "react";
-import ky from "ky";
+import { useEffect } from "react";
 import MyCard from "../../components/Card/Card";
-import type { ProductType } from "../../types";
+import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
+import { fetchProducts } from "../../store/reducers/ProductsSlice";
 
 function ProductsList() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-
-  const getProducts = async () => {
-    try {
-      const data: ProductType[] = await ky(
-        "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json"
-      ).json();
-      setProducts(data);
-    } catch (err: unknown) {
-      if (err instanceof Error) console.log(err.message);
-    }
-  };
+  const { products, status, error } = useTypedSelector(
+    (state) => state.productsReducer
+  );
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
-    getProducts();
-  }, []);
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <>
       <h1 style={{ display: "flex", marginTop: "60px" }}>Catalog</h1>
+      {status === "loading" && <h2>Loading...</h2>}
+      {error && <h2>{error}</h2>}
       <SimpleGrid cols={4}>
         {products.map((product) => (
           <MyCard
