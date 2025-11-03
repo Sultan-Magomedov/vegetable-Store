@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it} from "vitest";
 import { screen, renderWithRedux } from "../../../test-utils";
 import Cart from "./Cart";
 import "@testing-library/jest-dom";
